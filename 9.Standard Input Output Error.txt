@@ -1,0 +1,13 @@
+#######################Standard Input Out & Error######################
+The Basic flow of any Linux command is that it takes an input and gives an output
+
+#The standard input(STDIN) device is the keyboard.
+#The standard output(STDIN) device is the screen.
+
+With redirection, the above standard input/output can be changed.
+
+0	<	input
+1	>	output
+2	2>	error
+
+#ls -ltr > /tmp/outputfile/          *here > is used to redirect the ls -ltr file to /tmp/outputfile/

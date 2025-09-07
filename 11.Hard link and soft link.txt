@@ -1,0 +1,105 @@
+Links in Linux are file system objects that establish connections between files or directories, allowing multiple names or locations to reference the same data
+
+Each hard linked file is assigned the same Inode value as the original, therefore they reference the same physical file location
+
+A soft link is similar to the file shortcut feature which is used in Windows Operating systems. Each soft linked file contains a separate Inode value that points to the original file.
+
+An inode is denoted by the phrase "file serial number", defined as a per-file system unique identifier for a file.
+
+Difference Between Hard link soft link
+
+Hard link files is assigned the same Inode value as the original
+Soft link file is assigned different inode values
+
+In hard link You cant find the difference between linked file and the original file
+In soft link you can find the difference between original and linked file
+
+We cant create hard link for directories
+We can create soft link for directories
+
+We cant create hard link in different file system(Example:Ext4 to XFS or Ext3 to Ext4)
+We can create soft link between across the file system
+
+Deleting Original file will not effect linked file
+Deleting Original file will make soft linked file inaccessible
+
+
+Softlink:
+[root@localhost ~]# vim  softfile12
+[root@localhost ~]# 
+[root@localhost ~]# cat softfile12
+
+I am Abundance
+I am Heppiest luckiest person in the world
+[root@localhost ~]# ln -s softfile12 softfiledest
+[root@localhost ~]# stat softfile12
+  File: softfile12
+  Size: 59        	Blocks: 8          IO Block: 4096   regular file
+Device: fd00h/64768d	Inode: 34286490    Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:admin_home_t:s0
+Access: 2025-01-08 16:11:39.572323412 +0600
+Modify: 2025-01-08 16:11:33.649323048 +0600
+Change: 2025-01-08 16:11:33.649323048 +0600
+ Birth: 2025-01-08 16:11:33.649323048 +0600
+[root@localhost ~]# stat softfiledest
+  File: softfiledest -> softfile12
+  Size: 10        	Blocks: 0          IO Block: 4096   symbolic link
+Device: fd00h/64768d	Inode: 34286488    Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:admin_home_t:s0
+Access: 2025-01-08 16:12:13.964325525 +0600
+Modify: 2025-01-08 16:12:13.962325525 +0600
+Change: 2025-01-08 16:12:13.962325525 +0600
+ Birth: 2025-01-08 16:12:13.962325525 +0600
+
+When we delete source file the softlink also deleted
+[root@localhost ~]# cat softfiledest
+cat: softfiledest: No such file or directory
+
+
+HardLink:
+[root@localhost ~]# touch hardlink
+[root@localhost ~]# ln hardlink destlink
+[root@localhost ~]# ls
+anaconda-ks.cfg  Downloads             Pictures      Templates
+Desktop          hardlink              Public        Videos
+destlink         initial-setup-ks.cfg  softfile2
+Documents        Music                 softfiledest
+[root@localhost ~]# stat hardlink
+  File: hardlink
+  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
+Device: fd00h/64768d	Inode: 34286489    Links: 2
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:admin_home_t:s0
+Access: 2025-01-08 16:21:59.172361487 +0600
+Modify: 2025-01-08 16:21:59.172361487 +0600
+Change: 2025-01-08 16:22:01.955361658 +0600
+ Birth: 2025-01-08 16:21:59.172361487 +0600
+[root@localhost ~]# stat destlink
+  File: destlink
+  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
+Device: fd00h/64768d	Inode: 34286489    Links: 2
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:admin_home_t:s0
+Access: 2025-01-08 16:21:59.172361487 +0600
+Modify: 2025-01-08 16:21:59.172361487 +0600
+Change: 2025-01-08 16:22:01.955361658 +0600
+ Birth: 2025-01-08 16:21:59.172361487 +0600
+
+When we delete hardlink file ,destfile will be delete
+[root@localhost ~]# rm -rf hardlink
+[root@localhost ~]# stat destlink
+  File: destlink
+  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
+Device: fd00h/64768d	Inode: 34286489    Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Context: unconfined_u:object_r:admin_home_t:s0
+Access: 2025-01-08 16:21:59.172361487 +0600
+Modify: 2025-01-08 16:21:59.172361487 +0600
+Change: 2025-01-08 16:23:14.458366114 +0600
+ Birth: 2025-01-08 16:21:59.172361487 +0600
+
+
+
+ 
