@@ -1,4 +1,4 @@
-﻿# 9.Standard-Input-Output-Error
+﻿# 9.Standard-Input-Output-Error & #11.Hard-link-and-soft-link
  In Linux, standard input, output, and error are pre-defined communication channels or "streams" that allow processes to interact with the system. They are often referred to as file descriptors, although they are not actual files in the traditional sense.
 
 #Standard Input (stdin):
@@ -18,4 +18,5 @@ This is the channel specifically for error messages and diagnostic output genera
  #Soft Link:A soft link is a special type of file that contains the path to another file or directory. It acts as a pointer or a shortcut.
 
  
+
 
